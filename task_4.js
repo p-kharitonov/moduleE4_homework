@@ -33,7 +33,7 @@ Lamp.prototype.changePower = function(percent){
     }
 };
 
-function PC(name, maxPower, ram){
+function PC(name, maxPower, ram) {
     this.name = name;
     this.maxPower = maxPower;
     this.currentPower = maxPower;
@@ -41,10 +41,6 @@ function PC(name, maxPower, ram){
 }
 
 PC.prototype = new Device();
-
-function electricOutlet() {
-
-}
 
 myLamp = new Lamp('Lamp', 5, 'white');
 myPc = new PC('PC', 500, 8);

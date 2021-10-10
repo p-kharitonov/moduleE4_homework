@@ -7,7 +7,6 @@ class Device {
         this.currentPower = maxPower;
         this.connect = false;
     }
-
     toggle(){
         this.connect = !this.connect;
         if (this.connect) {
@@ -20,46 +19,32 @@ class Device {
     }
 }
 
-
 class Lamp extends Device {
-    constuctor(name, maxPower, stepPower, color) {
+    constructor(name, maxPower, color){
         super(name, maxPower);
-        this.stepPower = stepPower;
         this.color = color;
     }
-
-    turnDown(count=1) {
-        if (this.currentPower - count * this.stepPower > 0) {
-            this.currentPower = this.currentPower - count * this.stepPower;
-        } else {
-            this.currentPower = 0;
+    changePower(percent){
+        if (percent >= 0 && percent <= 100) {
+            this.currentPower = this.maxPower * percent / 100;
+            console.log(`Мощность ${this.name} выставлена на ${this.currentPower} Вт.`);
         }
-        console.log(`Мощность ${this.name} снижена до ${this.currentPower} Вт.`);
-    }
-
-    turnUp(count=1) {
-        if (this.currentPower + count * this.stepPower < this.maxPower) {
-            this.currentPower = this.currentPower + count * this.stepPower;
-        } else {
-            this.currentPower = this.maxPower;
-        }
-        console.log(`Мощность ${this.name} увеличена до ${this.currentPower} Вт.`);
     }
 }
-class Pc extends Device {
+
+class PC extends Device {
     constructor(name, maxPower, ram){
-        super(name, maxPower)
+        super(name, maxPower);
         this.ram = ram;
     }
 }
 
-
-myLamp = new Lamp('Lamp', 5, 0.5, 'white');
-myPc = new Pc('PC', 500, 8);
+myLamp = new Lamp('Lamp', 5, 'white');
+myPc = new PC('PC', 500, 8);
 myLamp.toggle();
 myPc.toggle();
 console.log(`В данный момент устройства потребляют ${myLamp.currentPower + myPc.currentPower} Вт`);
-myLamp.turnDown(5);
+myLamp.changePower(5);
 console.log(`В данный момент устройства потребляют ${myLamp.currentPower + myPc.currentPower} Вт`);
 myLamp.toggle();
 console.log(`В данный момент устройства потребляют ${myLamp.currentPower + myPc.currentPower} Вт`);
