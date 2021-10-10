@@ -18,30 +18,19 @@ Device.prototype.toggle = function(){
     }
 };
 
-function Lamp(name, maxPower, stepPower, color){
+function Lamp(name, maxPower, color){
     this.name = name;
     this.maxPower = maxPower;
     this.currentPower = maxPower;
-    this.stepPower = stepPower;
     this.color = color;
 }
 
 Lamp.prototype = new Device();
-Lamp.prototype.turnDown = function(count=1){
-    if (this.currentPower - count * this.stepPower > 0) {
-        this.currentPower = this.currentPower - count * this.stepPower;
-    } else {
-        this.currentPower = 0;
+Lamp.prototype.changePower = function(percent){
+    if (percent >= 0 && percent <= 100) {
+        this.currentPower = this.maxPower * percent / 100;
+        console.log(`Мощность ${this.name} выставлена на ${this.currentPower} Вт.`);
     }
-    console.log(`Мощность ${this.name} снижена до ${this.currentPower} Вт.`);
-};
-Lamp.prototype.turnUp = function(count=1){
-    if (this.currentPower + count * this.stepPower < this.maxPower) {
-        this.currentPower = this.currentPower + count * this.stepPower;
-    } else {
-        this.currentPower = this.maxPower;
-    }
-    console.log(`Мощность ${this.name} увеличена до ${this.currentPower} Вт.`);
 };
 
 function PC(name, maxPower, ram){
@@ -53,12 +42,16 @@ function PC(name, maxPower, ram){
 
 PC.prototype = new Device();
 
-myLamp = new Lamp('Lamp', 5, 0.5, 'white');
+function electricOutlet() {
+
+}
+
+myLamp = new Lamp('Lamp', 5, 'white');
 myPc = new PC('PC', 500, 8);
 myLamp.toggle();
 myPc.toggle();
 console.log(`В данный момент устройства потребляют ${myLamp.currentPower + myPc.currentPower} Вт`);
-myLamp.turnDown(5);
+myLamp.changePower(5);
 console.log(`В данный момент устройства потребляют ${myLamp.currentPower + myPc.currentPower} Вт`);
 myLamp.toggle();
 console.log(`В данный момент устройства потребляют ${myLamp.currentPower + myPc.currentPower} Вт`);
