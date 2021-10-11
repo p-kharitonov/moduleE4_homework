@@ -42,8 +42,8 @@ function PC(name, maxPower, ram) {
 
 PC.prototype = new Device();
 
-myLamp = new Lamp('Lamp', 5, 'white');
-myPc = new PC('PC', 500, 8);
+const myLamp = new Lamp('Lamp', 5, 'white');
+const myPc = new PC('PC', 500, 8);
 myLamp.toggle();
 myPc.toggle();
 console.log(`В данный момент устройства потребляют ${myLamp.currentPower + myPc.currentPower} Вт`);
