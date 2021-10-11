@@ -41,7 +41,7 @@ function SmartPowerPlug(name, maxPower) {
     this.name = name;
     this.maxPower = maxPower;
     this.currentPower = maxPower;
-    this.connect = true
+    this.connect = true;
     this.connectedDevice = {};
 }
 
