@@ -51,11 +51,11 @@ SmartPowerPlug.prototype.addDevice = function(){
     for (let device of arguments) {
         this.connectedDevice[device.name] = device;
     }
-}
+};
 
 SmartPowerPlug.prototype.removeDevice = function(device){
-    delete this.connectedDevice[device.name]
-}
+    delete this.connectedDevice[device.name];
+};
 
 SmartPowerPlug.prototype.showPower = function(){
     if (this.connect) {
@@ -67,24 +67,24 @@ SmartPowerPlug.prototype.showPower = function(){
     } else {
         console.log(`Ошибка! ${this.name} выключен.`);
     }
-}
+};
 
 const myLamp = new Lamp('Lamp', 5, 'white');
 const myPc = new Pc('PC', 500, 8);
 const xiaomiSmartPowerPlug = new SmartPowerPlug('xiaomiSmartPowerPlug', 0.1);
 xiaomiSmartPowerPlug.addDevice(myLamp,myPc);
-xiaomiSmartPowerPlug.showPower()
+xiaomiSmartPowerPlug.showPower();
 myLamp.toggle();
 myPc.toggle();
-xiaomiSmartPowerPlug.showPower()
+xiaomiSmartPowerPlug.showPower();
 myLamp.changePower(5);
-xiaomiSmartPowerPlug.showPower()
+xiaomiSmartPowerPlug.showPower();
 myLamp.toggle();
 xiaomiSmartPowerPlug.toggle();
-xiaomiSmartPowerPlug.showPower()
+xiaomiSmartPowerPlug.showPower();
 myPc.toggle();
-xiaomiSmartPowerPlug.showPower()
+xiaomiSmartPowerPlug.showPower();
 myLamp.toggle();
 xiaomiSmartPowerPlug.toggle();
 myPc.toggle();
-xiaomiSmartPowerPlug.showPower()
+xiaomiSmartPowerPlug.showPower();
