@@ -3,7 +3,7 @@
 function Device(name, maxPower){
     this.name = name;
     this.maxPower = maxPower;
-    this.currentPower = maxPower;
+    this.currentPower = 0;
     this.connect = false;
 }
 
@@ -16,7 +16,7 @@ Device.prototype.toggle = function(){
 function Lamp(name, maxPower, color){
     this.name = name;
     this.maxPower = maxPower;
-    this.currentPower = maxPower;
+    this.currentPower = 0;
     this.color = color;
 }
 
@@ -28,26 +28,63 @@ Lamp.prototype.changePower = function(percent){
     }
 };
 
-function PC(name, maxPower, ram) {
+function Pc(name, maxPower, ram) {
     this.name = name;
     this.maxPower = maxPower;
-    this.currentPower = maxPower;
+    this.currentPower = 0;
     this.ram = ram;
 }
 
-PC.prototype = new Device();
+Pc.prototype = new Device();
+
+function SmartPowerPlug(name, maxPower) {
+    this.name = name;
+    this.maxPower = maxPower;
+    this.currentPower = maxPower;
+    this.connect = true
+    this.connectedDevice = {};
+}
+
+SmartPowerPlug.prototype = new Device();
+
+SmartPowerPlug.prototype.addDevice = function(){
+    for (let device of arguments) {
+        this.connectedDevice[device.name] = device;
+    }
+}
+
+SmartPowerPlug.prototype.removeDevice = function(device){
+    delete this.connectedDevice[device.name]
+}
+
+SmartPowerPlug.prototype.showPower = function(){
+    if (this.connect) {
+        let power = this.currentPower;
+        for (let device in this.connectedDevice) {
+            power += this.connectedDevice[device].currentPower;
+        }
+        console.log(`Потребление энергии составляет ${power} Вт.`);
+    } else {
+        console.log(`Ошибка! ${this.name} выключен.`);
+    }
+}
 
 const myLamp = new Lamp('Lamp', 5, 'white');
-const myPc = new PC('PC', 500, 8);
+const myPc = new Pc('PC', 500, 8);
+const xiaomiSmartPowerPlug = new SmartPowerPlug('xiaomiSmartPowerPlug', 0.1);
+xiaomiSmartPowerPlug.addDevice(myLamp,myPc);
+xiaomiSmartPowerPlug.showPower()
 myLamp.toggle();
 myPc.toggle();
-console.log(`В данный момент устройства потребляют ${myLamp.currentPower + myPc.currentPower} Вт`);
+xiaomiSmartPowerPlug.showPower()
 myLamp.changePower(5);
-console.log(`В данный момент устройства потребляют ${myLamp.currentPower + myPc.currentPower} Вт`);
+xiaomiSmartPowerPlug.showPower()
 myLamp.toggle();
-console.log(`В данный момент устройства потребляют ${myLamp.currentPower + myPc.currentPower} Вт`);
+xiaomiSmartPowerPlug.toggle();
+xiaomiSmartPowerPlug.showPower()
 myPc.toggle();
-console.log(`В данный момент устройства потребляют ${myLamp.currentPower + myPc.currentPower} Вт`);
+xiaomiSmartPowerPlug.showPower()
 myLamp.toggle();
+xiaomiSmartPowerPlug.toggle();
 myPc.toggle();
-console.log(`В данный момент устройства потребляют ${myLamp.currentPower + myPc.currentPower} Вт`);
+xiaomiSmartPowerPlug.showPower()
