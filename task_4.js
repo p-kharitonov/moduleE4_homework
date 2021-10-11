@@ -9,13 +9,8 @@ function Device(name, maxPower){
 
 Device.prototype.toggle = function(){
     this.connect = !this.connect;
-    if (this.connect) {
-        this.currentPower = this.maxPower;
-        console.log(`${this.name} включен.`);
-    } else {
-        this.currentPower = 0;
-        console.log(`${this.name} выключен.`);
-    }
+    this.currentPower = this.connect * this.maxPower;
+    console.log(`${this.name} ${this.connect ? "включен" : "выключен" }.`);
 };
 
 function Lamp(name, maxPower, color){
